@@ -554,8 +554,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ankit.entity.Hobby;
-import com.ankit.entity.Skill;
+
 import com.ankit.entity.Student;
 
 @Repository
@@ -569,6 +568,8 @@ public class StudentDAOImpl implements StudentDAO {
 		sessionfactory.getCurrentSession().saveOrUpdate(student);
 
 	}
+	
+	
 
 	@Override
 	public void updateStudent(Student student) {
@@ -596,14 +597,36 @@ public class StudentDAOImpl implements StudentDAO {
 		Student student = getStudent(id);
 
 		sessionfactory.getCurrentSession().delete(student);
-		Query q = sessionfactory.getCurrentSession().createQuery(" delete from Hobby where student =:n");
+		/*Query q = sessionfactory.getCurrentSession().createQuery(" delete from Hobby where student =:n");
 		q.setParameter("n", student);
 		Query q1 = sessionfactory.getCurrentSession().createQuery(" delete from Skill where student =:p");
 		q1.setParameter("p", student);
-
+*/
 	}
 
+
+
 	@Override
+	public int checkEmail(String s) {
+		// TODO Auto-generated method stub
+		int i=0;
+		Query q = sessionfactory.getCurrentSession().createQuery("from Student");
+		List<Student> l = q.list();
+		for(Student g:l) {
+			/*if(g.equals(s)){
+				i++;
+			}*/
+			if(g.getTxtemail().equals(s)){
+				i++;
+				break;
+			}
+			
+		}
+		
+		return i;
+	}
+
+	/*@Override
 	public List<Hobby> getHobbies(int id) {
 		// TODO Auto-generated method stub
 		Student student = getStudent(id);
@@ -627,8 +650,8 @@ public class StudentDAOImpl implements StudentDAO {
 		//q.setProperties(j);
 		q.setParameter("n", student);
 		List<Skill> i = q.list();
-		/*for(Skill s:i)
-			System.out.println(s.getSkillname());*/
+		for(Skill s:i)
+			System.out.println(s.getSkillname());
 		return i;
 	}
 
@@ -639,9 +662,11 @@ public class StudentDAOImpl implements StudentDAO {
 		q.setParameter("e",email);
 		List<Student> s = q.list();
 		return s;
-	}
+	}*/
 
 }
+
+	
 +________________________________________
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
